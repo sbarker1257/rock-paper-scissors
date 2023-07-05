@@ -1,4 +1,6 @@
+import string
 from dataclasses import dataclass
+import random
 
 actions = {
     'none': 0,
@@ -21,9 +23,11 @@ class Player:
         self.playerinfo = playerinfo
 
     def take_move(self):
-        print(f'{self.playerinfo.name}')
-        move = int(input('[1] rock, [2] paper, [3] scissors'))
+
+        # move = int(input('[1] rock, [2] paper, [3] scissors'))
+        move = random.randint(1, 3)
         self.playerinfo.current_action = move
+        print(f'{self.playerinfo.name = } {move = }')
 
 
 def comparison(move1, move2):
@@ -67,7 +71,7 @@ class Game:
 
             right = len(self.players) - 1
             while i < right:
-                result = [(self.players[i].playerinfo.name, self.players[right].playerinfo.name), comparison(self.players[i].playerinfo.current_action, self.players[right].playerinfo.current_action)]
+                result = (self.players[i].playerinfo.name, self.players[right].playerinfo.name, comparison(self.players[i].playerinfo.current_action, self.players[right].playerinfo.current_action))
                 results.append(result)
                 right -= 1
 
@@ -78,15 +82,18 @@ class Game:
 
 players = []
 
-no_players = int(input('how many players? '))
+# no_players = int(input('how many players? '))
+no_players = 5000
 
 for i in range(no_players):
-    pinfo = PlayerInfo(input('Enter a name: '))
+    letters = string.ascii_lowercase
+    name = ''.join(random.choice(letters) for i in range(20))
+    pinfo = PlayerInfo(name)
     curr_player = Player(pinfo)
     players.append(curr_player)
 
-print(players)
-print(players[0].playerinfo.current_action)
+# print(players)
+# print(players[0].playerinfo.current_action)
 game = Game(players)
 while True:
 
